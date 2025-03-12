@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body, html {
+    height: 100%;
+    width: 100%;
+}
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+.image-section {
+    flex: 1;
+    background: url('hello-\(1\).jpg') no-repeat center center/cover;
+}
+.login-section {
+    flex: 0.5;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+h1{
+    margin-bottom: 100px;
+    color: blue;
+    font-style: oblique;
+}
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 400px;
+}
+label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background: #0056b3;
+}
+.link{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
