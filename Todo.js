@@ -25,9 +25,13 @@ function loadTasks() {
     tasks.forEach((task, index) => {
         let div = document.createElement("div");
         div.classList.add("task-item");
+
         div.innerHTML = `
-            <span>${task.task} - <strong>${task.category}</strong></span>
-            <button onclick="completeTask(${index})">✓</button>
+            <span class="task-text">${task.task} - <strong>${task.category}</strong></span>
+            <span class="button-group">
+                <button class="complete-btn" onclick="completeTask(${index})">✓</button>
+                <button class="delete-btn" onclick="deleteTask(${index})">X</button>
+            </span>
         `;
 
         if (task.completed) {
@@ -42,6 +46,13 @@ function loadTasks() {
 function completeTask(index) {
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
     tasks[index].completed = true;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    loadTasks();
+}
+
+function deleteTask(index) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.splice(index, 1);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     loadTasks();
 }
