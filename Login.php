@@ -28,12 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             } else {
                 echo "Invalid email or password.";
-                header("refresh:1; url=Login.html"); // Redirect to dashboard or homepage
+                header("refresh:1; url=index.html"); // Redirect to dashboard or homepage
                 exit();
             }
         } else {
             echo "Invalid email or password.";
-            header("refresh:1; url=Login.html"); // Redirect to dashboard or homepage
+            header("refresh:1; url=index.html"); // Redirect to dashboard or homepage
                 exit();
         }
 
