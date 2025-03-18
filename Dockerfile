@@ -1,20 +1,20 @@
-# use the official PHP image from Docker Hub
-FROM php:8.1-cli
+# Use PHP with Apache
+FROM php:8.1-apache
 
-# Create the /app directory
-RUN mkdir /app
+# Enable Apache modules
+RUN a2enmod rewrite
 
-# Set the working directory inside the container
-WORKDIR /app
+# Install MySQL extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copy your application files into the container
-COPY . .
+# Copy project files
+COPY . /var/www/html/
 
-# Expose the Render-provided port
-EXPOSE 8080
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
 
-# Default to using Render's port (or fallback to 8080 for local testing)
-ENV PORT=8080
+# Expose port 80
+EXPOSE 80
 
-# Start the built-in PHP server on the specified port
-CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t /app"]
+# Start Apache
+CMD ["apache2-foreground"]
