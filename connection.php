@@ -6,7 +6,7 @@ $dbuser = 'sql5768343';
 $dbpass = 'nxtHTjDmQi';
 
 // Create connection
-$conn = new mysqli($dbhostname, $dbuser, $dbpass, $dbdatabase, $Portnumber);
+$conn = new mysqli($dbhostname, $dbuser, $dbpass, $dbdatabase);
 
 // Check connection
 if ($conn->connect_error) {
