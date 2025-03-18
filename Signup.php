@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         echo "Sign-up successful. Redirecting to login...";
-        header("refresh:2; url=Login.html");
+        header("refresh:2; url=index.html");
         exit();
     } else {
         die("Could not sign up: " . $stmt->error);
