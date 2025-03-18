@@ -1,12 +1,13 @@
 <?php
 // Connection to database
-$dbhostname = 'localhost';
-$dbdatabase = 'db_form';
-$dbuser = 'root';
-$dbpass = '';
+$dbhostname = 'sql5.freesqldatabase.com';
+$dbdatabase = 'sql5768343';
+$dbuser = 'sql5768343';
+$dbpass = 'nxtHTjDmQi';
+$Portnumber: '3306';
 
 // Create connection
-$conn = new mysqli($dbhostname, $dbuser, $dbpass, $dbdatabase);
+$conn = new mysqli($dbhostname, $dbuser, $dbpass, $dbdatabase, $Portnumber);
 
 // Check connection
 if ($conn->connect_error) {
