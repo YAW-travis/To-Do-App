@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -7,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
     $confirmpass = trim($_POST['confirmpass']);
 
-    // Basic validation
+    // Validation
     if (empty($username) || empty($email) || empty($password) || empty($confirmpass)) {
         die("All fields are required.");
     }
@@ -24,33 +25,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $username);
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Check if email already exists
+    // Check existing email
     $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
-    if (!$stmt) {
-        die("Error preparing query: " . $conn->error);
-    }
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        die("Email already registered. Please use a different email.");
-
+        die("Email already registered.");
     }
     $stmt->close();
 
-    // Insert new user (without storing confirmpass)
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    // Generate 4-digit OTP
+    $otp = rand(1000, 9999);
 
-    if (!$stmt) {
-        die("Error preparing insert query: " . $conn->error);
-    }
-
-    $stmt->bind_param("sss", $username, $email, $hashed_password);
+    // Insert user
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, otp) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $username, $email, $hashed_password, $otp);
 
     if ($stmt->execute()) {
-        echo "Sign-up successful. Redirecting to login...";
-        header("refresh:2; url=index.html");
+        $_SESSION['email'] = $email;
+        $_SESSION['otp'] = $otp; // Save OTP in session
+        echo "<script>alert('Your OTP is: $otp'); window.location.href='verify.html';</script>";
         exit();
     } else {
         die("Could not sign up: " . $stmt->error);
