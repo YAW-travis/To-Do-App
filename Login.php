@@ -6,7 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = trim($_POST['password']);
 
     if (empty($email) || empty($password)) {
-        die("Email and Password are required.");
+        // You can use a session or redirect with error message
+        header("Location: index.html?error=empty_fields");
+        exit();
     }
 
     $email = mysqli_real_escape_string($conn, $email);
@@ -23,18 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->fetch();
 
             if (password_verify($password, $hashed_password)) {
-                echo "Login successful. Redirecting...";
-                header("refresh:2; url=Todo.html"); // Redirect to dashboard or homepage
+                // Successful login
+                header("Location: Todo.html");
                 exit();
             } else {
-                echo "Invalid email or password.";
-                header("refresh:1; url=index.html"); // Redirect to dashboard or homepage
+                header("Location: index.html?error=invalid_credentials");
                 exit();
             }
         } else {
-            echo "Invalid email or password.";
-            header("refresh:1; url=index.html"); // Redirect to dashboard or homepage
-                exit();
+            header("Location: index.html?error=invalid_credentials");
+            exit();
         }
 
         $stmt->close();
@@ -46,3 +46,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Invalid request method.";
 }
+?>
